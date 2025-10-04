@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Just LPU Things - Your Unified Academic Assistant</title>
+    <title>Just LPU Things - Simulated Academic Assistant</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -581,7 +581,7 @@
                     </svg>
                     Just LPU Things
                 </h1>
-                <p>YOUR UNIFIED ACADEMIC ASSISTANT</p>
+                <p>YOUR SIMULATED ACADEMIC ASSISTANT</p>
             </div>
 
             <form id="loginForm">
@@ -602,6 +602,7 @@
                 <p><strong>Demo Credentials:</strong></p>
                 <p><b>Student:</b> student@college.edu / student123</p>
                 <p><b>Faculty:</b> faculty@college.edu / faculty123</p>
+                <p style="margin-top: 5px;">*No actual API calls or backend needed*</p>
             </div>
         </div>
     </div>
@@ -691,7 +692,7 @@
             </div>
 
             <div id="doubt-solverPage" class="page-content">
-                <div class="page-header"><h1>AI Doubt Solver 💡</h1><p>Upload a file or image to get context-specific analysis from the AI.</p></div>
+                <div class="page-header"><h1>AI Doubt Solver 💡</h1><p>Upload a file or image to get context-specific analysis from the simulated AI.</p></div>
 
                 <div class="doubt-solver-grid">
                     <div class="doubt-form-card">
@@ -719,14 +720,14 @@
                                 <textarea id="documentTextArea" placeholder="Paste the full text of your PDF or DOCX file here, or leave empty if uploading a TXT or Image file." rows="8"></textarea>
                             </div>
 
-                            <button type="submit" class="btn" id="solveDoubtBtn">Solve Doubt</button>
+                            <button type="submit" class="btn" id="solveDoubtBtn">Solve Doubt (Simulated)</button>
                         </form>
                     </div>
 
                     <div class="doubt-response-box">
                         <div class="doubt-response-header">
                             <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                            AI Response
+                            AI Response (Simulated)
                         </div>
                         <div class="doubt-response-content" id="doubtResponseContent">
                             <p style="color: var(--text-secondary);">Upload a document and ask a question to get context-specific answers from the AI.</p>
@@ -736,10 +737,10 @@
             </div>
 
             <div id="chatPage" class="page-content">
-                <div class="page-header"><h1>AI Chat Assistant 🤖</h1><p>Ask me anything about your academics, schedule, or campus</p></div>
+                <div class="page-header"><h1>AI Chat Assistant 🤖</h1><p>Ask me anything about your academics, schedule, or campus (Simulated)</p></div>
                 <div class="chat-container">
                     <div class="chat-box">
-                        <div class="chat-messages" id="chatMessages"><div class="message bot"><div class="message-avatar">AI</div><div class="message-content">Hello! I'm your Campus AI Assistant powered by Llama 3. How can I help you today?</div></div></div>
+                        <div class="chat-messages" id="chatMessages"><div class="message bot"><div class="message-avatar">AI</div><div class="message-content">Hello! I'm your Campus AI Assistant. How can I help you today? Try asking about your "Timetable" or "Exams."</div></div></div>
                         <div class="chat-input">
                             <input type="text" id="chatInput" placeholder="Type your message...">
                             <button id="sendBtn">
@@ -786,7 +787,7 @@
                 <div class="page-header"><h1>Admin Dashboard 📊</h1><p>Manage campus communications and view analytics</p></div>
                 <div class="cards-grid" id="analyticsGrid"> </div>
                 <div style="background: var(--card-bg); border-radius: 16px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid var(--card-border); backdrop-filter: blur(10px);">
-                    <h2 style="margin-bottom: 20px;">Post New Event</h2>
+                    <h2 style="margin-bottom: 20px;">Post New Event (Simulated)</h2>
                     <form id="eventForm">
                         <div class="form-row"><div class="form-group"><label>Event Title</label><input type="text" id="eventTitle" placeholder="Enter event title" required></div><div class="form-group"><label>Event Date</label><input type="date" id="eventDate" required></div></div>
                         <div class="form-row"><div class="form-group"><label>Event Time</label><input type="time" id="eventTime" required></div><div class="form-group"><label>Location</label><input type="text" id="eventLocation" placeholder="Enter location" required></div></div>
@@ -805,6 +806,66 @@
     </div>
 
     <script>
+        // --- Dummy Data for Simulation ---
+        const DEMO_USERS = {
+            'student@college.edu': {
+                name: 'Jane Doe',
+                type: 'student',
+                courses: ['CSE-301', 'MAT-203', 'ENG-101'],
+                metrics: { pending_assignments: 3, attendance: 78 },
+                timetable: [
+                    { day: 'Monday', time: '9:00 AM', subject: 'CSE-301: Data Structures', faculty: 'Dr. A. Sharma', room: 'Block 7, L301' },
+                    { day: 'Monday', time: '11:00 AM', subject: 'MAT-203: Calculus III', faculty: 'Prof. R. Kumar', room: 'Block 4, G101' },
+                    { day: 'Tuesday', time: '10:00 AM', subject: 'CSE-301: Data Structures (Lab)', faculty: 'Mr. B. Singh', room: 'Block 7, C201' },
+                    { day: 'Wednesday', time: '1:00 PM', subject: 'ENG-101: Communication Skills', faculty: 'Dr. P. Verma', room: 'Block 1, S505' },
+                ],
+                assignments: [
+                    { subject: 'CSE-301', title: 'Binary Tree Implementation', due_date: '2025-10-15', status: 'Pending' },
+                    { subject: 'MAT-203', title: 'Chapter 5 Problems', due_date: '2025-10-10', status: 'Overdue' },
+                    { subject: 'ENG-101', title: 'Presentation Outline', due_date: '2025-10-25', status: 'Pending' },
+                ],
+                exams: [
+                    { subject: 'CSE-301', date: '2025-11-05', time: '2:00 PM', room: 'Auditorium A', duration: '2 Hrs' },
+                    { subject: 'MAT-203', date: '2025-11-12', time: '9:00 AM', room: 'Block 4, G101', duration: '3 Hrs' },
+                ]
+            },
+            'faculty@college.edu': {
+                name: 'Dr. A. Sharma',
+                type: 'faculty',
+                courses: ['CSE-301', 'CSE-405'],
+                metrics: { pending_assignments: 18, attendance: '45 Students' }, // Mocking faculty metrics
+                timetable: [
+                    { day: 'Monday', time: '9:00 AM', subject: 'CSE-301: Data Structures', faculty: 'Dr. A. Sharma', room: 'Block 7, L301' },
+                    { day: 'Thursday', time: '1:00 PM', subject: 'CSE-405: AI/ML', faculty: 'Dr. A. Sharma', room: 'Block 7, L405' },
+                ],
+                assignments: [
+                    { subject: 'CSE-301', title: 'Unit Test 1 Grading', due_date: '2025-10-18', status: 'Pending' },
+                    { subject: 'CSE-405', title: 'Project Proposals Review', due_date: '2025-10-22', status: 'Pending' },
+                ],
+                exams: [
+                    { subject: 'CSE-301', date: '2025-11-05', time: '2:00 PM', room: 'Auditorium A', duration: '2 Hrs' },
+                ]
+            }
+        };
+
+        const FACULTY_DIRECTORY = [
+            { name: 'Dr. A. Sharma', department: 'CSE', email: 'sharma@lpu.edu', phone: '987-654-3210', office: 'Block 7, F501' },
+            { name: 'Prof. R. Kumar', department: 'Mathematics', email: 'kumar@lpu.edu', phone: '987-654-3211', office: 'Block 4, F201' },
+            { name: 'Dr. P. Verma', department: 'Languages', email: 'verma@lpu.edu', phone: '987-654-3212', office: 'Block 1, F101' },
+        ];
+
+        let CAMPUS_EVENTS = [
+            { title: 'Tech Fest Hackathon', date: '2025-10-28', time: '9:00 AM', location: 'Open Air Theatre', description: '24-hour coding challenge. Register before 2025-10-20.' },
+            { title: 'Annual Sports Day', date: '2025-11-10', time: '4:00 PM', location: 'Main Stadium', description: 'Finals for football and cricket.' },
+        ];
+
+        const NOTIFICATIONS = [
+            { title: 'Maintenance Alert', message: 'Library Block 3 will be closed on 2025-10-10 for maintenance.', time: '2 hours ago', read: false },
+            { title: 'New Assignment Posted', message: 'CSE-301: Binary Tree Implementation is now available.', time: '1 day ago', read: true },
+        ];
+
+        const ANALYTICS_DATA = { total_queries: 1245, active_students: 489 };
+
         // --- SVG Icons for Theme Toggle ---
         const moonIcon = `<svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>`;
         const sunIcon = `<svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>`;
@@ -841,7 +902,7 @@
 
         function startNewChat() {
             // Clear all current messages
-            document.getElementById('chatMessages').innerHTML = '<div class="message bot"><div class="message-avatar">AI</div><div class="message-content">Hello! I\'m your Campus AI Assistant powered by Llama 3. How can I help you today?</div></div>';
+            document.getElementById('chatMessages').innerHTML = '<div class="message bot"><div class="message-avatar">AI</div><div class="message-content">Hello! I\'m your Campus AI Assistant. How can I help you today? Try asking about your "Timetable" or "Exams."</div></div>';
             navigateTo('chat');
             showToast('New AI Chat session started!', 'info');
         }
@@ -873,11 +934,6 @@
         applySavedTheme();
 
         // --- Globals & Config ---
-        const API_BASE = 'http://127.0.0.1:5000/api';
-        // WARNING: The API Key below is for DEMO PURPOSES ONLY and is exposed on the client.
-        // In a real application, you MUST proxy all calls to the Gemini API through your Flask backend to secure your key.
-        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=';
-        const apiKey = "AIzaSyAgVb6kApTaE-PtbfJkmadwjojYKjT1BF8"; // Keep placeholder blank for canvas environment
         let currentUser = null;
 
         // --- Element Selectors ---
@@ -952,55 +1008,23 @@
             }, 3000);
         }
 
-        // --- API Functions ---
-        async function apiCall(endpoint, options = {}) {
-            // Default options to ensure cookies are sent/received (CRITICAL for login)
-            const defaultOptions = {
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                    ...(options.headers || {})
-                },
-                ...options
-            };
+        // --- SIMULATED Authentication ---
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value.trim();
 
-            try {
-                const response = await fetch(`${API_BASE}${endpoint}`, defaultOptions);
-
-                // Check if response is okay (200-299 status)
-                if (!response.ok) {
-                    // Attempt to read error message from JSON body
-                    const errorData = await response.json().catch(() => ({ message: `Server responded with status: ${response.status}` }));
-                    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
-                }
-
-                return await response.json();
-            } catch (error) {
-                console.error(`API call to ${endpoint} failed:`, error);
-                const message = error.message.includes('HTTP error') ? 'A network error occurred or the backend is offline (Port 5000).' : error.message;
-                showToast(`Error: ${message}`, 'error');
-                throw error;
+            if (DEMO_USERS[email] && (email.includes('student') || email.includes('faculty'))) {
+                // In a real app, you'd check password, but here we just check email existence for demo
+                currentUser = DEMO_USERS[email];
+                showToast('Login Successful! Welcome to the Simulation.', 'success');
+                initDashboard();
+            } else {
+                showToast('Invalid Demo Credentials. Try student@college.edu / student123', 'error');
             }
         }
 
-        // --- Authentication ---
-        async function handleLogin(e) {
-            e.preventDefault();
-            const payload = {
-                method: 'POST',
-                body: JSON.stringify({ email: loginEmail.value, password: loginPassword.value })
-            };
-            try {
-                const data = await apiCall('/login', payload);
-                if (data.success) {
-                    currentUser = data.user;
-                    initDashboard();
-                }
-            } catch (error) { /* ... handled by apiCall */ }
-        }
-
-        async function handleLogout() {
-            await apiCall('/logout', { method: 'POST' });
+        function handleLogout() {
             currentUser = null;
             dashboard.classList.remove('active');
             loginPage.style.display = 'flex';
@@ -1032,7 +1056,7 @@
             loadDashboardMetrics();
             loadTimetable();
             loadExams();
-            loadPendingAssignments(); // <-- NEW CALL
+            loadPendingAssignments();
             loadEvents();
             loadFaculty();
             loadNotifications();
@@ -1045,7 +1069,6 @@
             document.querySelectorAll('.nav-link.active').forEach(l => l.classList.remove('active'));
             document.querySelectorAll('.page-content.active').forEach(p => p.classList.remove('active'));
 
-            // Check if the clicked link is visible (not filtered) before activating it
             const targetLink = document.querySelector(`.nav-link[data-page="${page}"]`);
             if (targetLink && !targetLink.parentElement.classList.contains('filtered')) {
                 targetLink.classList.add('active');
@@ -1057,48 +1080,36 @@
             }
         }
 
-        // --- Dynamic Dashboard Metrics Loading (FETCHES USER-SPECIFIC DATA) ---
-        async function loadDashboardMetrics() {
-            try {
-                const data = await apiCall('/dashboard-metrics');
+        // --- SIMULATED Dashboard Metrics Loading ---
+        function loadDashboardMetrics() {
+            const data = currentUser.metrics;
+            const pendingCount = data.pending_assignments;
 
-                // Update Dashboard Card Titles based on user type
-                if (currentUser.type === 'faculty') {
-                    assignmentsCardTitle.textContent = 'Grading Load';
-                    attendanceCardTitle.textContent = 'Workload Avg.';
-                    attendanceValue.textContent = data.attendance || 'N/A'; // N/A should display
-                } else {
-                    assignmentsCardTitle.textContent = 'Pending Assignments';
-                    attendanceCardTitle.textContent = 'Attendance';
-                    attendanceValue.textContent = (data.attendance === 'N/A' || typeof data.attendance !== 'number')
-                        ? data.attendance
-                        : `${data.attendance}%`;
-                }
+            // Update Dashboard Card Titles based on user type
+            if (currentUser.type === 'faculty') {
+                assignmentsCardTitle.textContent = 'Grading Load';
+                attendanceCardTitle.textContent = 'Workload Avg.';
+                attendanceValue.textContent = data.attendance || 'N/A';
+            } else {
+                assignmentsCardTitle.textContent = 'Pending Assignments';
+                attendanceCardTitle.textContent = 'Attendance';
+                attendanceValue.textContent = `${data.attendance}%`;
+            }
 
+            // Update Pending Assignments/Workload Card
+            assignmentsValue.textContent = pendingCount;
 
-                // Update Pending Assignments/Workload Card
-                const pendingCount = data.pending_assignments;
-                assignmentsValue.textContent = pendingCount;
-
-                // Update sidebar badge with the same count
-                const assignmentsBadge = document.getElementById('assignmentsBadge');
-                if (assignmentsBadge) {
-                    assignmentsBadge.textContent = pendingCount;
-                }
-
-            } catch (error) {
-                console.error("Failed to load dashboard metrics:", error);
-                // Set placeholders on failure
-                attendanceValue.textContent = 'Err';
-                assignmentsValue.textContent = 'Err';
+            // Update sidebar badge with the same count
+            const assignmentsBadge = document.getElementById('assignmentsBadge');
+            if (assignmentsBadge) {
+                assignmentsBadge.textContent = pendingCount;
             }
         }
 
 
-        // --- Data Loading & Rendering (Receives filtered data from backend) ---
-        async function loadTimetable() {
-            // Backend filters this data based on logged-in user's courses
-            const data = await apiCall('/timetable');
+        // --- SIMULATED Data Loading & Rendering ---
+        function loadTimetable() {
+            const data = currentUser.timetable || [];
             const tbody = document.querySelector('#timetableTable tbody');
             const todayTbody = document.querySelector('#todaySchedule tbody');
             tbody.innerHTML = '';
@@ -1108,17 +1119,12 @@
             let todayClassesCount = 0;
 
             data.forEach(item => {
-                // Ensure the subject is one the student is enrolled in or show all for faculty
-                const isRelevant = !currentUser || currentUser.type === 'faculty' || (currentUser.courses && currentUser.courses.includes(item.subject));
-
                 const rowHtml = `<td>${item.time}</td><td>${item.subject}</td><td>${item.faculty}</td><td>${item.room}</td>`;
                 // Populate the full timetable table
-                if (isRelevant) {
-                   tbody.innerHTML += `<tr><td>${item.day}</td>${rowHtml}</tr>`;
-                }
+                tbody.innerHTML += `<tr><td>${item.day}</td>${rowHtml}</tr>`;
 
                 // Populate the Today's Schedule (Dashboard)
-                if (item.day === today && isRelevant) {
+                if (item.day === today) {
                     todayTbody.innerHTML += `<tr>${rowHtml}</tr>`;
                     todayClassesCount++;
                 }
@@ -1126,32 +1132,28 @@
             document.getElementById('todayClassesCount').textContent = todayClassesCount;
         }
 
-        // FUNCTION: Load Pending Assignments/Workload List (FIXED BUG)
-        async function loadPendingAssignments() {
-            const data = await apiCall('/pending-assignments');
+        // SIMULATED: Load Pending Assignments/Workload List
+        function loadPendingAssignments() {
+            const data = currentUser.assignments || [];
             const tbody = document.querySelector('#assignmentsTable tbody');
             tbody.innerHTML = '';
 
-            // Get header elements
             const assignmentsPageHeader = document.getElementById('assignmentsPageHeader');
             const assignmentsPageSubtitle = document.getElementById('assignmentsPageSubtitle');
             const assignmentHeaderTitle = document.getElementById('assignmentHeaderTitle');
             const assignmentHeaderSubject = document.getElementById('assignmentHeaderSubject');
 
-            // Set Headers based on user role
             if (currentUser.type === 'faculty') {
                 assignmentsPageHeader.textContent = 'Grading & Pending Workload 📋';
                 assignmentsPageSubtitle.textContent = 'Your list of pending tasks to be completed.';
                 assignmentHeaderTitle.textContent = 'Task/Item';
                 assignmentHeaderSubject.textContent = 'Course/Department';
-
-            } else { // Student
+            } else {
                 assignmentsPageHeader.textContent = 'Pending Assignments 📚';
                 assignmentsPageSubtitle.textContent = 'Your list of incomplete academic tasks and due dates.';
                 assignmentHeaderTitle.textContent = 'Title';
                 assignmentHeaderSubject.textContent = 'Subject';
             }
-
 
             if (data.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-secondary);">No pending items found! 🎉</td></tr>';
@@ -1163,7 +1165,6 @@
                                     item.status === 'Overdue' ? 'var(--danger)' :
                                     'var(--success)';
 
-                // The data structure uses 'subject' and 'title' consistently
                 const titleColumn = item.title;
                 const subjectColumn = item.subject;
 
@@ -1178,17 +1179,15 @@
         }
 
 
-        async function loadExams() {
-            // Backend filters this data based on logged-in user's courses
-            const data = await apiCall('/exams');
+        function loadExams() {
+            const data = currentUser.exams || [];
             const tbody = document.querySelector('#examsTable tbody');
             tbody.innerHTML = data.map(item => `<tr><td>${item.subject}</td><td>${item.date}</td><td>${item.time}</td><td>${item.room}</td><td>${item.duration}</td></tr>`).join('');
         }
 
-        async function loadEvents() {
-            const data = await apiCall('/events');
+        function loadEvents() {
             const container = document.getElementById('eventsContainer');
-            container.innerHTML = data.map(event => `
+            container.innerHTML = CAMPUS_EVENTS.map(event => `
                 <div class="event-card">
                     <span class="event-date" style="font-size: 0.8em; padding: 5px 10px; color: var(--text-secondary);">${event.date}</span>
                     <h3 style="font-size: 1.2em; margin: 8px 0; color: var(--text-primary);">${event.title}</h3>
@@ -1198,22 +1197,20 @@
                     </div>
                     <p style="margin-top: 10px; color: var(--text-primary);">${event.description}</p>
                 </div>`).join('');
-             document.getElementById('upcomingEventsCount').textContent = data.length;
+             document.getElementById('upcomingEventsCount').textContent = CAMPUS_EVENTS.length;
         }
 
-        async function loadFaculty() {
-            const data = await apiCall('/faculty');
+        function loadFaculty() {
             const tbody = document.querySelector('#facultyTable tbody');
-            tbody.innerHTML = data.map(item => `<tr><td>${item.name}</td><td>${item.department}</td><td>${item.email}</td><td>${item.phone}</td><td>${item.office}</td></tr>`).join('');
+            tbody.innerHTML = FACULTY_DIRECTORY.map(item => `<tr><td>${item.name}</td><td>${item.department}</td><td>${item.email}</td><td>${item.phone}</td><td>${item.office}</td></tr>`).join('');
         }
 
-        async function loadNotifications() {
-            const data = await apiCall('/notifications');
+        function loadNotifications() {
             const container = document.getElementById('notificationsContainer');
-            const unreadCount = data.filter(n => !n.read).length;
+            const unreadCount = NOTIFICATIONS.filter(n => !n.read).length;
             document.getElementById('notifBadge').textContent = unreadCount;
             document.getElementById('topNotifBadge').textContent = unreadCount;
-            container.innerHTML = data.map(n => `
+            container.innerHTML = NOTIFICATIONS.map(n => `
                 <div class="notification-item ${!n.read ? 'unread' : ''}" style="padding: 15px; border-bottom: 1px solid var(--card-border);">
                     <div style="font-weight: 600; color: var(--text-primary);">${n.title}</div>
                     <p style="margin: 5px 0; color: var(--text-secondary);">${n.message}</p>
@@ -1221,23 +1218,17 @@
                 </div>`).join('');
         }
 
-        async function loadAnalytics() {
-            try {
-                const data = await apiCall('/analytics');
-                const container = document.getElementById('analyticsGrid');
-                container.innerHTML = `
-                    <div class="card"><div class="card-header"><div class="card-icon blue"><svg width="24" height="24" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg></div><div><div class="card-title">Total Queries</div></div></div><div class="card-value">${data.total_queries}</div></div>
-                    <div class="card"><div class="card-header"><div class="card-icon green"><svg width="24" height="24" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg></div><div><div class="card-title">Active Students</div></div></div><div class="card-value">${data.active_students}</div></div>
-                `;
-            } catch(error) {
-                console.error("Failed to load analytics:", error);
-                const container = document.getElementById('analyticsGrid');
-                container.innerHTML = `<p style="color: var(--danger); padding: 20px;">Could not load analytics. Faculty access may be required.</p>`;
-            }
+        function loadAnalytics() {
+            const data = ANALYTICS_DATA;
+            const container = document.getElementById('analyticsGrid');
+            container.innerHTML = `
+                <div class="card"><div class="card-header"><div class="card-icon blue"><svg width="24" height="24" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg></div><div><div class="card-title">Total Queries (Simulated)</div></div></div><div class="card-value">${data.total_queries}</div></div>
+                <div class="card"><div class="card-header"><div class="card-icon green"><svg width="24" height="24" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg></div><div><div class="card-title">Active Students (Simulated)</div></div></div><div class="card-value">${data.active_students}</div></div>
+            `;
         }
 
-        // --- Core Chat Function (Uses Flask/Llama 3.2 backend) ---
-        async function sendChatMessage() {
+        // --- SIMULATED Chat Function ---
+        function sendChatMessage() {
             const input = document.getElementById('chatInput');
             const messagesId = 'chatMessages';
             const message = input.value.trim();
@@ -1248,18 +1239,47 @@
 
             addTypingIndicator(messagesId);
 
-            try {
-                // Keeps the original /chat endpoint
-                const data = await apiCall('/chat', {
-                    method: 'POST',
-                    body: JSON.stringify({ message })
-                });
+            setTimeout(() => {
                 removeTypingIndicator();
-                addMessageToChat(messagesId, data.response, 'bot');
-            } catch (error) {
-                 removeTypingIndicator();
-                 addMessageToChat(messagesId, 'Sorry, I encountered an error talking to Llama 3.2.', 'bot');
+                let response = generateChatResponse(message);
+                addMessageToChat(messagesId, response, 'bot');
+            }, 1500); // Simulate network delay
+        }
+
+        function generateChatResponse(query) {
+            const lowerQuery = query.toLowerCase();
+
+            if (lowerQuery.includes('timetable') || lowerQuery.includes('schedule')) {
+                const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+                const todaySchedule = currentUser.timetable.filter(item => item.day === today);
+                if (todaySchedule.length > 0) {
+                    const scheduleList = todaySchedule.map(item => `• ${item.time}: ${item.subject} with ${item.faculty} in ${item.room}`).join('\n');
+                    return `Your schedule for **${today}** is:\n${scheduleList}\n\nFor the full week, check the Timetable tab!`;
+                } else {
+                    return `You have no classes scheduled for **${today}**. Enjoy your day!`;
+                }
             }
+            if (lowerQuery.includes('exam') || lowerQuery.includes('test')) {
+                 if (currentUser.exams && currentUser.exams.length > 0) {
+                    const nextExam = currentUser.exams[0];
+                    return `Your next exam is **${nextExam.subject}** on **${nextExam.date}** at **${nextExam.time}** in ${nextExam.room}. Make sure to prepare!`;
+                 } else {
+                     return `No upcoming exams are currently scheduled in your record. Keep checking the Exams & Grades tab.`;
+                 }
+            }
+            if (lowerQuery.includes('assignment') || lowerQuery.includes('due')) {
+                const pendingCount = currentUser.metrics.pending_assignments;
+                if (pendingCount > 0) {
+                    return `You have **${pendingCount}** pending task(s). The most urgent one is **${currentUser.assignments[0].title}** for ${currentUser.assignments[0].subject}, due on ${currentUser.assignments[0].due_date}.`;
+                } else {
+                    return `Congratulations! You have **no** pending assignments.`;
+                }
+            }
+            if (lowerQuery.includes('hello') || lowerQuery.includes('hi')) {
+                return `Hello ${currentUser.name.split(' ')[0]}! What's on your mind today?`;
+            }
+
+            return "I'm a simulated AI assistant for Just LPU Things. I can provide simulated answers about your **Timetable**, **Exams**, and **Assignments** based on the demo data. Try asking a specific question!";
         }
 
         function addMessageToChat(containerId, text, type) {
@@ -1272,7 +1292,7 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        async function handleEventPost(e) {
+        function handleEventPost(e) {
             e.preventDefault();
             const eventData = {
                 title: document.getElementById('eventTitle').value,
@@ -1282,23 +1302,17 @@
                 description: document.getElementById('eventDescription').value
             };
 
-            try {
-                const data = await apiCall('/post-event', {
-                    method: 'POST',
-                    body: JSON.stringify(eventData)
-                });
-                if (data.success) {
-                    showToast('Event posted successfully!', 'success');
-                    document.getElementById('eventForm').reset();
-                    loadEvents(); // Refresh the events list
-                }
-            } catch(error) {
-                // Error toast is already handled by apiCall
-            }
+            // SIMULATION: Add event to the in-memory array
+            CAMPUS_EVENTS.push(eventData);
+
+            showToast('Event posted successfully! (Simulated)', 'success');
+            document.getElementById('eventForm').reset();
+            loadEvents(); // Refresh the events list
+            navigateTo('events');
         }
 
 
-        // --- Doubt Solver Logic (Image and Text) ---
+        // --- SIMULATED Doubt Solver Logic ---
 
         function getFileExtension(filename) {
             return filename.split('.').pop().toLowerCase();
@@ -1320,11 +1334,11 @@
 
                 if (extension === 'txt') {
                     fileStatusDiv.classList.add('file-status-success');
-                    statusMessageSpan.innerHTML = `${icon} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>TXT file detected. Ready for direct AI processing.</span>`;
+                    statusMessageSpan.innerHTML = `${icon} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>TXT file detected. Ready for direct AI processing. (Simulated)</span>`;
                     documentTextArea.placeholder = "Leave this box empty. The content will be read directly from the TXT file.";
                 } else if (isImageFile(extension)) {
                     fileStatusDiv.classList.add('file-status-image');
-                    statusMessageSpan.innerHTML = `${icon} d="M4 16l4.586-4.586a2 2 0 012.828 0L20 18V5a2 2 0 00-2-2H6a2 2 0 00-2 2v11zM14 11a2 2 0 11-4 0 2 2 0 014 0z"></path></svg><span>Image file detected. Using Gemini Vision Model.</span>`;
+                    statusMessageSpan.innerHTML = `${icon} d="M4 16l4.586-4.586a2 2 0 012.828 0L20 18V5a2 2 0 00-2-2H6a2 2 0 00-2 2v11zM14 11a2 2 0 11-4 0 2 2 0 014 0z"></path></svg><span>Image file detected. Using Gemini Vision Model. (Simulated)</span>`;
                     documentTextArea.placeholder = "Leave this box empty. Document text is NOT required for image files.";
                 } else if (extension === 'pdf' || extension === 'docx') {
                     fileStatusDiv.classList.add('file-status-warning');
@@ -1360,138 +1374,30 @@
             doubtResponseContent.innerHTML = '';
             addTypingIndicator('doubtResponseContent', 'bot');
 
-            try {
-                // 1. Handle TEXT files (TXT, PDF, DOCX)
-                if (extension === 'txt') {
-                    await new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onload = async function(event) {
-                            const payload = { query: query, document_text: event.target.result };
-                            await processTextQuery(file.name, payload);
-                            resolve();
-                        };
-                        reader.onerror = reject;
-                        reader.readAsText(file);
-                    });
-                    return;
+            let simulatedResponseText = '';
 
-                } else if (extension === 'pdf' || extension === 'docx') {
-                    const documentTextManual = documentTextArea.value.trim();
-                    if (documentTextManual.length < 50) {
-                        throw new Error("For PDF/DOCX, you must paste the document's text into the large text area (min 50 chars).");
-                    }
-                    const payload = { query: query, document_text: documentTextManual };
-                    await processTextQuery(file.name, payload);
-                    return;
-
-                // 2. Handle IMAGE files (JPG, PNG, JPEG)
-                } else if (isImageFile(extension)) {
-                     await new Promise((resolve, reject) => {
-                         const reader = new FileReader();
-                         reader.onload = async function(event) {
-                             const base64Data = event.target.result.split(',')[1];
-                             const mimeType = file.type;
-                             await processImageQuery(file.name, query, mimeType, base64Data);
-                             resolve();
-                         };
-                         reader.onerror = reject;
-                         reader.readAsDataURL(file);
-                     });
-                     return;
-                }
-
-                // Fallback for unsupported types
-                throw new Error(`Unsupported file type: ${extension}.`);
-
-            } catch (error) {
-                removeTypingIndicator();
-                doubtResponseContent.innerHTML = `<p style="color: var(--danger);">An error occurred: ${error.message}</p>`;
-                showToast(`Doubt Solver Error: ${error.message}`, 'error');
-            } finally {
-                solveDoubtBtn.disabled = false;
-                solveDoubtBtn.textContent = 'Solve Doubt';
-            }
-        }
-
-        // --- Exponential Backoff Retry Function ---
-        async function fetchWithRetry(url, options, maxRetries = 5) {
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (response.status === 429) { // Too Many Requests
-                        const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        continue;
-                    }
-                    if (!response.ok) {
-                        const errorData = await response.json().catch(() => ({ message: `Server responded with status: ${response.status}` }));
-                        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
-                    }
-                    return response;
-                } catch (error) {
-                    if (i === maxRetries - 1) throw error;
-                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
-            }
-        }
-
-
-        // --- Text Document Processing (Uses Ollama/Flask Backend) ---
-        async function processTextQuery(fileName, payload) {
-            const MAX_TEXT_LENGTH = 15000;
-            payload.document_text = payload.document_text.substring(0, MAX_TEXT_LENGTH);
-
-            if (payload.document_text.length === MAX_TEXT_LENGTH) {
-                showToast('Document truncated for processing. Max 15,000 characters supported.', 'warning');
-            }
-
-            const data = await apiCall('/doubt-solver-query', {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            });
-
-            removeTypingIndicator();
-            doubtResponseContent.innerHTML = formatResponse(fileName, payload.query, data.summary);
-            showToast('Doubt solved successfully!', 'success');
-        }
-
-
-        // --- Image Processing (Uses Gemini API directly - WARNING: Exposed Key) ---
-        async function processImageQuery(fileName, query, mimeType, base64Data) {
-
-            const url = GEMINI_API_URL + apiKey;
-            const systemPrompt = "You are an expert academic assistant specializing in analyzing images of math problems, diagrams, charts, and handwritten notes. Respond clearly and accurately to the user's request based only on the image content. If the image is illegible or irrelevant, state that clearly.";
-
-            const geminiPayload = {
-                contents: [{
-                    parts: [
-                        { text: query },
-                        { inlineData: { mimeType: mimeType, data: base64Data } }
-                    ]
-                }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                }
-            };
-
-            const response = await fetchWithRetry(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(geminiPayload)
-            });
-
-            const result = await response.json();
-
-            if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts[0].text) {
-                const responseText = result.candidates[0].content.parts[0].text;
-                removeTypingIndicator();
-                doubtResponseContent.innerHTML = formatResponse(fileName, query, responseText);
-                showToast('Image analyzed successfully!', 'success');
+            // SIMULATION Logic
+            if (extension === 'txt' || extension === 'pdf' || extension === 'docx') {
+                 simulatedResponseText = `**Simulated Text Analysis Result**:\n\nThe AI has processed your document (or the pasted text) and found the following relevant information regarding your question, "${query}":\n\n- **Document Context:** This document appears to be related to **Data Structures and Algorithms** or **Advanced Calculus** based on the content.\n- **Simulated Summary:** Since you asked about the main topic or a summary, the primary theme is the **implementation of binary search trees** and their time complexity analysis. Key terms covered include AVL trees, Red-Black trees, and asymptotic notation. Please refer to page 5 for the detailed time complexity tables.\n\n*This response is generated by the client-side simulation.*`;
+            } else if (isImageFile(extension)) {
+                 simulatedResponseText = `**Simulated Image Analysis Result**:\n\nThe AI Vision Model has successfully analyzed the image **${file.name}** and your query: "${query}".\n\n- **Image Recognition:** The image was identified as a **handwritten equation or a circuit diagram**.\n- **Simulated Solution:** Assuming it was a math problem (e.g., "Solve for x"), the simulated solution is: Based on the visual analysis, the value of **x is 42** and the time complexity is **O(n log n)**. The main components are clearly labelled in the top-right corner.\n\n*This response is generated by the client-side simulation.*`;
             } else {
-                 const errorReason = result.candidates?.[0]?.finishReason || result.promptFeedback?.blockReason || 'Unknown API Error. Check console.';
-                 throw new Error(`AI Analysis Failed: ${errorReason}`);
+                // Fallback for unsupported types
+                 removeTypingIndicator();
+                 doubtResponseContent.innerHTML = `<p style="color: var(--danger);">An error occurred: Unsupported file type: ${extension}. The simulation only handles TXT, PDF, DOCX (with manual paste), and Image files.</p>`;
+                 solveDoubtBtn.disabled = false;
+                 solveDoubtBtn.textContent = 'Solve Doubt (Simulated)';
+                 return;
             }
+
+            setTimeout(() => {
+                removeTypingIndicator();
+                doubtResponseContent.innerHTML = formatResponse(file.name, query, simulatedResponseText);
+                showToast('Doubt solved successfully! (Simulated)', 'success');
+                solveDoubtBtn.disabled = false;
+                solveDoubtBtn.textContent = 'Solve Doubt (Simulated)';
+            }, 3000); // Longer delay for simulation
+
         }
 
         function formatResponse(fileName, query, responseText) {
@@ -1525,7 +1431,7 @@
                 indicatorDiv.id = 'typing-indicator';
                 indicatorDiv.style = "padding: 20px; text-align: center;";
                 indicatorDiv.innerHTML = `
-                    <p style="font-weight: 600; color: var(--accent-color);">AI is analyzing the document...</p>
+                    <p style="font-weight: 600; color: var(--accent-color);">AI is analyzing the document... (Simulated)</p>
                     <div class="typing-indicator bot-typing" style="justify-content: center; margin-top: 10px;">
                         <span></span><span></span><span></span>
                     </div>
