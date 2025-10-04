@@ -6,9 +6,11 @@ import ollama
 from functools import wraps
 
 app = Flask(__name__)
+# CRITICAL: Change this secret key in a production environment
 app.secret_key = 'your-secret-key-here-change-in-production'
 
 # CRITICAL: Enable credentials (cookies) for cross-origin requests to allow login sessions.
+# The frontend (running in a different origin/port) needs this.
 CORS(app, supports_credentials=True)
 
 
@@ -37,6 +39,7 @@ def faculty_required(f):
 # -----------------------------------------------------
 # --- In-Memory Database (DYNAMIC DATA) ---
 # -----------------------------------------------------
+# NOTE: In a real application, this data would be replaced by a proper database (like PostgreSQL or MongoDB).
 
 users_db = {
     'student@college.edu': {
@@ -46,16 +49,25 @@ users_db = {
         'roll_no': 'CS2021001',
         'semester': '6th',
         # --- DYNAMIC STUDENT DATA ---
-        'courses': ['Data Structures', 'Database Systems', 'Software Engineering'],
+        'courses': ['Data Structures', 'Database Systems', 'Software Engineering', 'Advanced Physics', 'Calculus III'], # Added more courses
         'attendance': 87,
-        'pending_assignments': 2
+        'pending_assignments': 2, # Retain count for dashboard card
+        'pending_assignments_list': [ # Student's list
+            {'subject': 'Data Structures', 'title': 'Binary Tree Traversal', 'due_date': '2025-10-10', 'status': 'Pending'},
+            {'subject': 'Software Engineering', 'title': 'UML Diagram Project', 'due_date': '2025-10-15', 'status': 'Pending'}
+        ]
     },
     'faculty@college.edu': {
         'password': hash_password('faculty123'),
         'type': 'faculty',
         'name': 'Dr. Smith',
         'department': 'Computer Science',
-        'grading_load': 15  # Faculty metric
+        'grading_load': 3,  # Adjusted to match the number of assignments
+        'pending_assignments_list': [ # Faculty's workload list (3 items)
+            {'subject': 'Data Structures', 'title': 'Grade Mid-Term Exams', 'due_date': '2025-10-12', 'status': 'Overdue'},
+            {'subject': 'Database Systems', 'title': 'Review Project Proposals', 'due_date': '2025-10-18', 'status': 'Pending'},
+            {'subject': 'Calculus III', 'title': 'Set Final Exam Questions', 'due_date': '2025-10-30', 'status': 'Pending'}
+        ]
     }
 }
 
@@ -69,7 +81,13 @@ timetable_db = [
     {'day': 'Tuesday', 'time': '10:00 AM', 'subject': 'Machine Learning', 'faculty': 'Dr. Williams', 'room': 'CS-305'},
     {'day': 'Wednesday', 'time': '9:00 AM', 'subject': 'Web Development', 'faculty': 'Prof. Brown', 'room': 'CS-102'},
     {'day': 'Thursday', 'time': '2:00 PM', 'subject': 'Software Engineering', 'faculty': 'Dr. Davis', 'room': 'CS-201'},
-    {'day': 'Friday', 'time': '11:00 AM', 'subject': 'Cloud Computing', 'faculty': 'Prof. Wilson', 'room': 'CS-304'}
+    {'day': 'Friday', 'time': '11:00 AM', 'subject': 'Cloud Computing', 'faculty': 'Prof. Wilson', 'room': 'CS-304'},
+    # --- ADDED SATURDAY CLASSES FOR DEMO ---
+    {'day': 'Saturday', 'time': '8:30 AM', 'subject': 'Calculus III', 'faculty': 'Dr. White', 'room': 'MATH-101'},
+    {'day': 'Saturday', 'time': '10:00 AM', 'subject': 'Advanced Physics', 'faculty': 'Prof. Newton', 'room': 'PHY-205'},
+    {'day': 'Saturday', 'time': '11:30 AM', 'subject': 'Data Structures', 'faculty': 'Dr. Smith', 'room': 'CS-101'},
+    {'day': 'Saturday', 'time': '1:30 PM', 'subject': 'Database Systems', 'faculty': 'Prof. Johnson', 'room': 'CS-203'},
+    {'day': 'Saturday', 'time': '3:00 PM', 'subject': 'Software Engineering', 'faculty': 'Dr. Davis', 'room': 'CS-201'}
 ]
 
 exams_db = [
@@ -114,7 +132,7 @@ def get_llama_chat_response(message):
     try:
         current_date = datetime.now().strftime('%A, %B %d, %Y')
         system_prompt = f"""
-        You are 'Campus GPT', a helpful AI assistant for a college.
+        You are 'Just LPU Things AI', a helpful AI assistant for the university.
         Your goal is to assist students and faculty.
         Be friendly, concise, and helpful.
         When asked about schedules, exams, or events, use the following data.
@@ -125,6 +143,7 @@ def get_llama_chat_response(message):
         - Events: {events_db}
         """
 
+        # Ensure that the llama3.2 model is downloaded via `ollama pull llama3.2`
         response = ollama.chat(
             model='llama3.2',
             messages=[
@@ -149,12 +168,14 @@ def get_llama_summary(document_text, query):
 
         USER'S QUESTION: "{query}"
 
-        DOCUMENT TEXT:
+        DOCUMENT TEXT (first 15,000 chars):
         ---
         {document_text}
         ---
         """
+        # Note: Frontend enforces 15,000 char limit on client side
 
+        # Ensure that the llama3.2 model is downloaded via `ollama pull llama3.2`
         response = ollama.chat(
             model='llama3.2',
             messages=[
@@ -173,7 +194,7 @@ def get_llama_summary(document_text, query):
 
 @app.route('/')
 def index():
-    return "Campus GPT Backend API is running!"
+    return "Just LPU Things Backend API is running!"
 
 
 @app.route('/api/login', methods=['POST'])
@@ -187,8 +208,8 @@ def login():
 
         if check_password_hash(stored_hash, password):
             session['user'] = email
-            # Prepare user info, excluding the password hash
-            user_info = {k: v for k, v in users_db[email].items() if k != 'password'}
+            # Prepare user info, excluding the password hash and detailed lists
+            user_info = {k: v for k, v in users_db[email].items() if k != 'password' and k != 'pending_assignments_list'}
             return jsonify({'success': True, 'user': user_info})
 
     return jsonify({'success': False, 'message': 'Invalid credentials'}), 401
@@ -206,23 +227,24 @@ def get_dashboard_metrics():
     user_email = session.get('user')
     user_info = users_db.get(user_email)
 
-    if not user_info:
-        # Return a safe, successful response (200) for unauthenticated users/initial load
-        return jsonify({'attendance': '78', 'pending_assignments': 0}), 200
+    # Default metrics for unauthenticated users
+    attendance_value = '78'
+    pending_assignments_value = 0 # Default count
 
-    if user_info['type'] == 'student':
-        return jsonify({
-            'attendance': user_info.get('attendance', 0),
-            'pending_assignments': user_info.get('pending_assignments', 0)
-        })
-    elif user_info['type'] == 'faculty':
-        return jsonify({
-            'attendance': '78',
-            'pending_assignments': user_info.get('grading_load', 0)
-        })
+    if user_info:
+        if user_info['type'] == 'student':
+            attendance_value = user_info.get('attendance', 0)
+            # Use the stored count from the list size or the direct metric
+            pending_assignments_value = user_info.get('pending_assignments', 0)
+        elif user_info['type'] == 'faculty':
+            # Faculty dashboard shows grading load/workload
+            attendance_value = 'N/A' # Faculty attendance is irrelevant here
+            pending_assignments_value = len(user_info.get('pending_assignments_list', [])) # Use list size for badge/card
 
-    # Fallback return
-    return jsonify({'attendance': '78', 'pending_assignments': 0}), 200
+    return jsonify({
+        'attendance': attendance_value,
+        'pending_assignments': pending_assignments_value # This returns the COUNT
+    }), 200
 
 
 # UPDATED: Filters timetable by student courses
@@ -240,6 +262,19 @@ def get_timetable():
         return jsonify(filtered_timetable)
 
     return jsonify(timetable_db)  # Faculty/Admin gets the full schedule
+
+
+# UPDATED ROUTE: Retrieves pending assignments/workload for both student and faculty
+@app.route('/api/pending-assignments', methods=['GET'])
+def get_pending_assignments():
+    user_email = session.get('user')
+    user_info = users_db.get(user_email)
+
+    if not user_info:
+        return jsonify([])
+
+    # Returns the detailed list for both roles
+    return jsonify(user_info.get('pending_assignments_list', []))
 
 
 # UPDATED: Filters exams by student courses
@@ -261,6 +296,7 @@ def get_exams():
 
 @app.route('/api/events', methods=['GET'])
 def get_events():
+    # Sort events by date for upcoming order
     sorted_events = sorted(events_db, key=lambda x: x['date'])
     return jsonify(sorted_events)
 
@@ -272,11 +308,13 @@ def get_faculty():
 
 @app.route('/api/notifications', methods=['GET'])
 def get_notifications():
+    # Sort notifications by ID (newest first)
     sorted_notifications = sorted(notifications_db, key=lambda x: x['id'], reverse=True)
     return jsonify(sorted_notifications)
 
 
 @app.route('/api/analytics', methods=['GET'])
+@faculty_required
 def get_analytics():
     # Placeholder analytics data
     analytics = {
@@ -307,6 +345,7 @@ def chat():
     data = request.json
     message = data.get('message', '')
 
+    # Call the Ollama helper function
     response = get_llama_chat_response(message)
 
     return jsonify({
@@ -328,6 +367,7 @@ def doubt_solver_query():
     if not query:
         return jsonify({'success': False, 'message': 'No question provided for analysis.'}), 400
 
+    # Call the Ollama helper function for document summary
     summary = get_llama_summary(document_text, query)
 
     return jsonify({
@@ -338,5 +378,8 @@ def doubt_solver_query():
 
 
 if __name__ == '__main__':
-    # Ensure Ollama is running and llama3.2 is pulled before starting the server.
+    # CRITICAL: Before running, ensure:
+    # 1. Ollama server is running (e.g., in a separate terminal)
+    # 2. The required model is downloaded: `ollama pull llama3.2`
+    # 3. The Flask app is accessible by the frontend on the correct port (5000)
     app.run(debug=True, port=5000)
